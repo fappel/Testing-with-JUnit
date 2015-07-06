@@ -15,12 +15,10 @@ public class GitTimelineFactory {
   
   static final String SESSION_STORE = "junit.storage";
   static final String TIMELINE_FOLDER = ".timeline";
-  static final String REPOSITORY_NAME = "junit";
-  static final String URI = "git@github.com:junit-team/junit.git";
 
-  public static SwingTimeline<GitItem> createTimeline( String baseDirectory ) {
+  public static SwingTimeline<GitItem> createTimeline( String baseDirectory, String uri, String name ) {
     File repositoryLocation = ensureTimelineDirectory( baseDirectory ).toFile();
-    GitItemProvider itemProvider = new GitItemProvider( URI, repositoryLocation, REPOSITORY_NAME );
+    GitItemProvider itemProvider = new GitItemProvider( uri, repositoryLocation, name );
     GitItemUiFactory itemUiFactory = new GitItemUiFactory();
     File storageLocation = ensureStorageLocationInUserDir( baseDirectory );
     FileSessionStorage<GitItem> storage = new FileSessionStorage<>( storageLocation, new GitItemSerialization() );

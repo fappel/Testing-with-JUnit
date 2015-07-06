@@ -10,4 +10,13 @@
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../build/pom.xml</relativePath>
   </parent>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit</artifactId>
+      <version>3.7.1.201504261725-r</version>
+    </dependency>
+  </dependencies>
+  
 </project>

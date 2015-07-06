@@ -5,12 +5,12 @@ import static book.twju.timeline.model.FakeItems.FIRST_ITEM;
 import static book.twju.timeline.model.FileSessionStorage.STORAGE_LOCATION_MUST_NOT_BE_NULL;
 import static book.twju.timeline.model.MementoAssert.assertThat;
 import static book.twju.timeline.test.util.ThrowableCaptor.thrownBy;
+import static java.nio.file.Files.readAllBytes;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.Optional;
 
 import org.junit.Rule;
@@ -132,7 +132,7 @@ public class FileSessionStorageITest {
   }
   
   private String storedMemento( File storageLocation ) throws IOException {
-    byte[] bytes = Files.readAllBytes( storageLocation.toPath() );
+    byte[] bytes = readAllBytes( storageLocation.toPath() );
     return new String( bytes, StandardCharsets.UTF_8 );
   }
 }

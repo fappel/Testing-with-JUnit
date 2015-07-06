@@ -1,7 +1,6 @@
 package book.twju.timeline.provider.git;
 
 import static book.twju.timeline.provider.git.GitItemProvider.DESTINATION_MUST_NOT_BE_NULL;
-import static book.twju.timeline.provider.git.GitItemProvider.GIT_ITEM_PROVIDER_IS_DISPOSED;
 import static book.twju.timeline.provider.git.GitItemProvider.LATEST_ITEM_MUST_NOT_BE_NULL;
 import static book.twju.timeline.provider.git.GitItemProvider.NAME_MUST_NOT_BE_NULL;
 import static book.twju.timeline.provider.git.GitItemProvider.URI_MUST_NOT_BE_NULL;
@@ -13,14 +12,13 @@ import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.jgit.lib.ObjectId;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import book.twju.timeline.provider.git.GitItem;
-import book.twju.timeline.provider.git.GitItemProvider;
+import book.twju.timeline.test.util.GitRepository;
+import book.twju.timeline.test.util.GitRule;
 
 public class GitItemProviderITest {
   
@@ -41,11 +39,6 @@ public class GitItemProviderITest {
     repository = createRepository( remoteLocation );
     destination = temporaryFolder.newFolder();
     provider = new GitItemProvider( remoteLocation.toURI().toString(), destination, CLONE_NAME );
-  }
-  
-  @After
-  public void tearDown() {
-    provider.dispose();
   }
 
   @Test
@@ -103,17 +96,6 @@ public class GitItemProviderITest {
   }
 
   @Test
-  public void fetchItemsIfDisposed() throws IOException {
-    provider.dispose();
-    
-    Throwable actual = thrownBy( () -> provider.fetchItems( null, 1 ) );
-    
-    assertThat( actual )
-      .hasMessage( GIT_ITEM_PROVIDER_IS_DISPOSED )
-      .isInstanceOf( IllegalStateException.class );
-  }
-
-  @Test
   public void fetchNew() throws IOException {
     List<GitItem> latestItems = provider.fetchItems( null, 1 );
     int newCount = 2;
@@ -158,17 +140,6 @@ public class GitItemProviderITest {
   }
 
   @Test
-  public void fetchNewIfDisposed() throws IOException {
-    provider.dispose();
-    
-    Throwable actual = thrownBy( () -> provider.fetchNew( null ) );
-    
-    assertThat( actual )
-      .hasMessage( GIT_ITEM_PROVIDER_IS_DISPOSED )
-      .isInstanceOf( IllegalStateException.class );
-  }
-
-  @Test
   public void getNewCount() throws IOException {
     List<GitItem> latestItem = provider.fetchItems( null, 1 );
     createCommits( repository, 1, "n" );
@@ -203,17 +174,6 @@ public class GitItemProviderITest {
     assertThat( actual )
       .hasMessage( LATEST_ITEM_MUST_NOT_BE_NULL )
       .isInstanceOf( IllegalArgumentException.class );
-  }
-
-  @Test
-  public void getNewCountIfDisposed() throws IOException {
-    provider.dispose();
-    
-    Throwable actual = thrownBy( () -> provider.getNewCount( null ) );
-    
-    assertThat( actual )
-      .hasMessage( GIT_ITEM_PROVIDER_IS_DISPOSED )
-      .isInstanceOf( IllegalStateException.class );
   }
   
   @Test

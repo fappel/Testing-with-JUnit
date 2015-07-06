@@ -13,6 +13,10 @@ import book.twju.timeline.swing.SwingTimeline;
 
 public class Application {
 
+  private static final String BASE_DIRECTORY = System.getProperty( "user.home" );
+  private static final String URI = "git@github.com:junit-team/junit.git";
+  private static final String REPOSITORY_NAME = "junit";
+  
   public static void main( String[] args ) {
     Locale.setDefault( Locale.ENGLISH );
     invokeLater( () -> createAndShowUi() );
@@ -20,7 +24,7 @@ public class Application {
 
   private static void createAndShowUi() {
     JFrame frame = createFrame();
-    SwingTimeline<?> timeline = createTimeline( System.getProperty( "user.home" ) );
+    SwingTimeline<?> timeline = createTimeline( BASE_DIRECTORY, URI, REPOSITORY_NAME );
     layout( frame, timeline.getComponent() );
     timeline.startAutoRefresh();
   }

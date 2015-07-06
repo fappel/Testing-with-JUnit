@@ -1,28 +1,23 @@
 package book.twju.timeline.provider.git;
 
 import static book.twju.timeline.provider.git.GitItem.ofCommit;
+import static book.twju.timeline.provider.git.GitOperator.guarded;
 import static book.twju.timeline.util.Conditions.checkArgument;
-import static book.twju.timeline.util.Conditions.checkState;
-import static book.twju.timeline.util.Exceptions.guard;
 import static book.twju.timeline.util.Iterables.asList;
 import static java.lang.String.format;
 import static java.lang.System.getProperty;
 import static java.util.stream.Collectors.toList;
 import static org.eclipse.jgit.api.Git.cloneRepository;
-import static org.eclipse.jgit.api.Git.open;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Callable;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.RepositoryNotFoundException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -36,15 +31,11 @@ public class GitItemProvider implements ItemProvider<GitItem> {
   static final String FETCH_COUNT_MUST_NOT_BE_NEGATIVE = "Argument 'fetchCount' must not be negative.";
   static final String LATEST_ITEM_MUST_NOT_BE_NULL = "Argument 'latestItem' must not be null.";
   static final String DESTINATION_MUST_BE_A_DIRECTORY = "Destination <%s> must be a directory.";
-  static final String GIT_ITEM_PROVIDER_IS_DISPOSED = "GitItemProvider is disposed.";
   static final String UNKNOWN_GIT_ITEM = "GitItem <%s> is unknown in repository <%s>.";
-  static final String REPOSITORY_DIRECTORY_IS_EMPTY = "Repository directory <%s> is empty.";
   static final String URI_IS_NOT_VALID = "URI <%s> is not valid.";
   
-  private final Git git;
+  private final GitOperator operator;
   
-  private boolean disposed;
-
   public GitItemProvider( String uri, String name ) {
     this( uri, new File( getProperty( "java.io.tmpdir" ) ), name );
   }
@@ -55,12 +46,11 @@ public class GitItemProvider implements ItemProvider<GitItem> {
     checkArgument( name != null, NAME_MUST_NOT_BE_NULL );
     checkArgument( !destination.exists() || destination.isDirectory(), DESTINATION_MUST_BE_A_DIRECTORY, destination );
     
-    git = guarded( () -> openRepository( cloneIfNeeded( uri, destination, name ) ) );
+    operator = new GitOperator( cloneIfNeeded( uri, destination, name ) );
   }
 
   @Override
   public List<GitItem> fetchItems( GitItem oldestItem, int fetchCount ) {
-    checkState( !disposed, GIT_ITEM_PROVIDER_IS_DISPOSED );
     checkArgument( fetchCount >= 0, FETCH_COUNT_MUST_NOT_BE_NEGATIVE );
     
     return asList( readCommits( oldestItem, fetchCount ) )
@@ -77,23 +67,15 @@ public class GitItemProvider implements ItemProvider<GitItem> {
 
   @Override
   public List<GitItem> fetchNew( GitItem latestItem ) {
-    checkState( !disposed, GIT_ITEM_PROVIDER_IS_DISPOSED );
     checkArgument( latestItem != null, LATEST_ITEM_MUST_NOT_BE_NULL );
     
-    guarded( () -> git.pull().call() );
-    List<RevCommit> commits = asList( guarded( () -> git.log().setMaxCount( 100 ).call() ) );
+    operator.execute( git -> git.pull().call() );
+    List<RevCommit> commits = asList( operator.execute( git -> git.log().setMaxCount( 100 ).call() ) );
     return commits
       .subList( 0, computeNewCount( latestItem, commits ) )
       .stream()
       .map( commit -> ofCommit( commit ) )
       .collect( toList() );
-  }
-
-  public void dispose() {
-    if( !disposed ) {
-      git.close();
-      disposed = true;
-    }
   }
 
   private File cloneIfNeeded( String uri, File destination, String name ) {
@@ -112,23 +94,15 @@ public class GitItemProvider implements ItemProvider<GitItem> {
       throw new IllegalArgumentException( format( URI_IS_NOT_VALID, uri ) );
     }
   }
-  
-  private Git openRepository( File repositoryDir ) throws IOException {
-    try {
-      return open( repositoryDir ); 
-    } catch ( RepositoryNotFoundException rnfe ) {
-      throw new IllegalArgumentException( format( REPOSITORY_DIRECTORY_IS_EMPTY, repositoryDir ) );
-    }
-  }
 
   private Iterable<RevCommit> readCommits( GitItem oldestItem, int fetchCount ) {
     if( oldestItem != null ) {
-      return guarded( () -> fetchPredecessors( oldestItem, fetchCount ) );
+      return operator.execute( git -> fetchPredecessors( git, oldestItem, fetchCount ) );
     }
-    return guarded( () -> git.log().setMaxCount( fetchCount ).call() );
+    return operator.execute( git -> git.log().setMaxCount( fetchCount ).call() );
   }
 
-  private Iterable<RevCommit> fetchPredecessors( GitItem oldestItem, int fetchCount ) throws Exception {
+  private Iterable<RevCommit> fetchPredecessors( Git git , GitItem oldestItem, int fetchCount ) throws Exception {
     try {
       return git.log().add( getId( oldestItem ) ).setMaxCount( fetchCount + 1 ).call();
     } catch( MissingObjectException moe ) {
@@ -154,9 +128,5 @@ public class GitItemProvider implements ItemProvider<GitItem> {
 
   private static ObjectId getId( GitItem oldestItem ) {
     return ObjectId.fromString( oldestItem.getId() );
-  }
-
-  private static <T> T guarded( Callable<T> callable ) {
-    return guard( callable ).with( IllegalStateException.class );
   }
 }
