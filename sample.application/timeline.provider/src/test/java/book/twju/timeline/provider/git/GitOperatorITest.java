@@ -14,9 +14,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import book.twju.timeline.test.util.GitRepository;
-import book.twju.timeline.test.util.GitRule;
-
 public class GitOperatorITest {
 
   private static final int COMMIT_COUNTS = 10;

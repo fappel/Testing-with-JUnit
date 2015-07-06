@@ -13,9 +13,9 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import book.twju.timeline.provider.git.GitItem;
+import book.twju.timeline.provider.git.GitRepository;
+import book.twju.timeline.provider.git.GitRule;
 import book.twju.timeline.swing.SwingTimeline;
-import book.twju.timeline.test.util.GitRepository;
-import book.twju.timeline.test.util.GitRule;
 
 public class GitTimelineFactoryITest {
   
