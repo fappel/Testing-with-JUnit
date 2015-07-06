@@ -90,8 +90,13 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.4.201502262128</version>
+        <configuration>
+          <excludes>
+            <exclude>**/Application.class</exclude>
+            <exclude>book/twju/timeline/test/util/*</exclude>
+          </excludes>
+        </configuration>
         <executions>
-
 		       <execution>
 		         <id>pre-unit-test</id>
 		         <goals>
@@ -120,7 +125,6 @@
 		            <goal>report</goal>
 		         </goals>
 		      </execution>
-
         </executions>
       </plugin>
     </plugins>
