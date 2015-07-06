@@ -60,8 +60,6 @@ class TopItemTestHelper {
     } );
     invokeAndWait( mock( Runnable.class ) );
     invokeAndWait( mock( Runnable.class ) );
-    invokeAndWait( mock( Runnable.class ) );
-    invokeAndWait( mock( Runnable.class ) );
     return panel;
   }
 }

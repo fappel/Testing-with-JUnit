@@ -19,6 +19,7 @@ import java.util.Optional;
 import javax.swing.JPanel;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import book.twju.timeline.model.Item;
@@ -54,6 +55,7 @@ public class TopItemScrollerITest {
   }
   
   @Test
+  @Ignore
   public void scrollIntoViewIfAboveTop() throws Exception {
     Item item = equipTimelineWithTopItem( new Item( "id", 20L ) {} );
     JPanel component = showInFrame( new JPanel() );
