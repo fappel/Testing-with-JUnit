@@ -19,14 +19,20 @@ import java.util.Optional;
 import javax.swing.JPanel;
 
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 
 import book.twju.timeline.model.Item;
 import book.twju.timeline.model.Timeline;
+import book.twju.timeline.test.util.ConditionalIgnoreRule;
+import book.twju.timeline.test.util.ConditionalIgnoreRule.ConditionalIgnore;
+import book.twju.timeline.test.util.NotRunningOnWindows;
 import book.twju.timeline.ui.ItemUiMap;
 
 public class TopItemScrollerITest {
+  
+  @Rule
+  public final ConditionalIgnoreRule ignoreRule = new ConditionalIgnoreRule();
 
   private ItemUiMap<Item, Container> itemUiMap;
   private TopItemScroller<Item> scroller;
@@ -55,7 +61,7 @@ public class TopItemScrollerITest {
   }
   
   @Test
-  @Ignore
+  @ConditionalIgnore( condition = NotRunningOnWindows.class )
   public void scrollIntoViewIfAboveTop() throws Exception {
     Item item = equipTimelineWithTopItem( new Item( "id", 20L ) {} );
     JPanel component = showInFrame( new JPanel() );
