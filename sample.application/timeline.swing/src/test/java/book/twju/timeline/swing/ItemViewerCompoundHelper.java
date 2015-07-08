@@ -11,7 +11,7 @@ import book.twju.timeline.swing.TopItemUpdater;
 class ItemViewerCompoundHelper {
 
   @SuppressWarnings("unchecked")
-  static ItemViewerCompound<Item> stubItemViewer( 
+  static ItemViewerCompound<Item> stubItemViewerCompound( 
     ItemUiList<Item> itemUiList, TopItemScroller<Item> scroller, TopItemUpdater<Item> topItemUpdater )
   {
     ItemViewerCompound<Item> itemViewerCompound = mock( ItemViewerCompound.class );

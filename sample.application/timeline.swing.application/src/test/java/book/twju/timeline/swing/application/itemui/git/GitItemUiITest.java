@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import book.twju.timeline.provider.git.GitItem;
-import book.twju.timeline.swing.application.itemui.git.GitItemUi;
 
 public class GitItemUiITest {
   
@@ -22,8 +21,13 @@ public class GitItemUiITest {
   @Before
   public void setUp() {
     Locale.setDefault( ENGLISH );
-    item = spy( new GitItem( "id", currentTimeMillis(), "author", "content" ) );
+    item = spy( new GitItem( "id", now(), "author", "content" ) );
     gitItemUi = new GitItemUi( item );
+  }
+  
+  @Test
+  public void getComponent() {
+    assertThat( gitItemUi.getComponent() ).isNotNull();
   }
   
   @Test
@@ -42,13 +46,12 @@ public class GitItemUiITest {
     
     assertThat( time ).isEqualTo( "5 minutes ago" );
   }
-  
-  @Test
-  public void getComponent() {
-    assertThat( gitItemUi.getComponent() ).isNotNull();
-  }
 
   private long fiveMinutesAgo() {
-    return System.currentTimeMillis() - 5 * 1_000 * 60;
+    return now() - 5 * 1_000 * 60;
+  }
+  
+  private long now() {
+    return currentTimeMillis();
   }
 }

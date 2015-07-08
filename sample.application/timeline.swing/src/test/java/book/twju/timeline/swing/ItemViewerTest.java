@@ -1,7 +1,7 @@
 package book.twju.timeline.swing;
 
 import static book.twju.timeline.swing.ItemViewerCompoundHelper.stubItemList;
-import static book.twju.timeline.swing.ItemViewerCompoundHelper.stubItemViewer;
+import static book.twju.timeline.swing.ItemViewerCompoundHelper.stubItemViewerCompound;
 import static book.twju.timeline.swing.ItemViewerCompoundHelper.stubScroller;
 import static book.twju.timeline.swing.ItemViewerCompoundHelper.stubTopItemUpdater;
 import static book.twju.timeline.ui.FetchOperation.MORE;
@@ -33,7 +33,7 @@ public class ItemViewerTest {
     itemUiList = stubItemList();
     scroller = stubScroller();
     topItemUpdater = stubTopItemUpdater();
-    itemViewer = new ItemViewer<>( stubItemViewer( itemUiList, scroller, topItemUpdater ) );
+    itemViewer = new ItemViewer<>( stubItemViewerCompound( itemUiList, scroller, topItemUpdater ) );
   }
 
   @Test

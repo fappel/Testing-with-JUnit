@@ -28,6 +28,11 @@ public class HeaderTest {
     timeline = mock( Timeline.class );
     header = createHeader( timeline, directBackgroundProcessor() );
   }
+  
+  @Test
+  public void getComponent() {
+    assertThat( header.getComponent() ).isNotNull();
+  }
 
   @Test
   public void updateIfNewItemIsAvailable() {
