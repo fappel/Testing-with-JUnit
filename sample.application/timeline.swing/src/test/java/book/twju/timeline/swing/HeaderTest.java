@@ -18,7 +18,6 @@ import book.twju.timeline.model.Item;
 import book.twju.timeline.model.Timeline;
 
 @SuppressWarnings("unchecked")
-
 public class HeaderTest {
   
   private Timeline<Item> timeline;
