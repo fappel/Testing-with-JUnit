@@ -13,8 +13,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.awt.Container;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,16 +23,16 @@ public class ItemUiMapTest {
 
   private static final int ITEM_INDEX = 0;
   
-  private ItemUiMap<FakeItem, Container> itemUiMap;
+  private ItemUiMap<FakeItem, Object> itemUiMap;
   private Timeline<FakeItem> timeline;
   private ItemUi<FakeItem> itemUi;
-  private Container uiContext;
+  private Object uiContext;
   private FakeItem item;
 
   @Before
   @SuppressWarnings("unchecked")
   public void setUp() {
-    uiContext = new Container();
+    uiContext = new Object();
     item = FIRST_ITEM;
     timeline = stubTimeline( item );
     itemUi = mock( ItemUi.class ); 
@@ -177,11 +175,11 @@ public class ItemUiMapTest {
       .isInstanceOf( IllegalArgumentException.class );
   }
 
-  private static ItemUiFactory<FakeItem, Container> stubItemUiFactory(
-    ItemUi<FakeItem> expected, Container uiContext, FakeItem item, int itemIndex )
+  private static ItemUiFactory<FakeItem, Object> stubItemUiFactory(
+    ItemUi<FakeItem> expected, Object uiContext, FakeItem item, int itemIndex )
   {
     @SuppressWarnings("unchecked")
-    ItemUiFactory<FakeItem, Container> result = mock( ItemUiFactory.class );
+    ItemUiFactory<FakeItem, Object> result = mock( ItemUiFactory.class );
     when( result.create( uiContext, item, itemIndex ) ).thenReturn( expected );
     return result;
   }
