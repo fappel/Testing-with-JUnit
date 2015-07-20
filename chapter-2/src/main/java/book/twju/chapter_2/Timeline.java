@@ -26,6 +26,6 @@ public class Timeline {
   }
   
   public void dispose() {
-    // only for teardown handling demonstration
+    // Note: this method only for teardown handling demonstration and will be removed
   }
 }

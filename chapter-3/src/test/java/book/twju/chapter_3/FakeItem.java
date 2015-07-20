@@ -1,0 +1,15 @@
+package book.twju.chapter_3;
+
+public class FakeItem implements Item {
+
+  private final long timeStamp;
+  
+  FakeItem( long timeStamp ) {
+    this.timeStamp = timeStamp;
+  }
+  
+  @Override
+  public long getTimeStamp() {
+    return timeStamp;
+  }
+}
