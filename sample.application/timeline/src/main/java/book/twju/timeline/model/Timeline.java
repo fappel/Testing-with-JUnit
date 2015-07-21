@@ -15,8 +15,10 @@ public class Timeline<T extends Item> {
   public static final int FETCH_COUNT_UPPER_BOUND = 20;
   public static final int DEFAULT_FETCH_COUNT = 10;
 
-  static final String ERROR_EXCEEDS_LOWER_BOUND = "Argument 'fetchCount' %s exceeds lower bound.";
-  static final String ERROR_EXCEEDS_UPPER_BOUND = "Argument 'fetchCount' %s exceeds upper bound.";
+  static final String ERROR_EXCEEDS_LOWER_BOUND 
+  = "FetchCount of %s exceeds lower bound of " + FETCH_COUNT_LOWER_BOUND + ".";
+  static final String ERROR_EXCEEDS_UPPER_BOUND 
+    = "FetchCount of %s exceeds upper bound of " + FETCH_COUNT_UPPER_BOUND + ".";
   static final String ERROR_TOP_ITEM_IS_UNRELATED = "TopItem <%s> is not contained in item list.";
   static final String ERROR_TOP_ITEM_MUST_NOT_BE_NULL = "Argument 'topItem' must not be null.";
   static final String ERROR_SESSION_PROVIDER_MUST_NOT_BE_NULL = "Argument 'sessionProvider' must not be null.";
