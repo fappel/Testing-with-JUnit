@@ -41,7 +41,7 @@ public class Listing_2_Stub_TimelineTest {
   }
   
   @Test
-  public void fetchItems_NonHappyPathVersion() {
+  public void fetchFirstItems() {
     itemProvider.addItems( FIRST_ITEM, SECOND_ITEM );
       
     timeline.fetchItems();
