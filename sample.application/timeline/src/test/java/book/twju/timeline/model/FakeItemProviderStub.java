@@ -20,7 +20,7 @@ class FakeItemProviderStub implements ItemProvider<FakeItem> {
   public List<FakeItem> fetchItems( FakeItem ancestor, int count ) {
     return items
         .stream()
-        .sorted( inReverseOrder() )
+        .sorted( descending() )
         .filter( item -> isApplicable( ancestor, item ) )
         .limit( count )
         .collect( toList() );
@@ -35,7 +35,7 @@ class FakeItemProviderStub implements ItemProvider<FakeItem> {
   public List<FakeItem> fetchNew( FakeItem predecessor ) {
     return items
         .stream()
-        .sorted( inReverseOrder() )
+        .sorted( descending() )
         .filter( item -> isNewer( item, predecessor ) )
         .collect( toList() );
   }
@@ -45,7 +45,7 @@ class FakeItemProviderStub implements ItemProvider<FakeItem> {
     return this;
   }
   
-  private Comparator<? super FakeItem> inReverseOrder() {
+  private Comparator<? super FakeItem> descending() {
     return ( first, second ) -> -first.compareTo( second );
   }
   

@@ -32,7 +32,7 @@ public class Listing_6_Mockito_ItemProviderStub_TimelineTest {
   }
   
   @Test
-  public void fetchFirstItemsWithTopItemRecovery() {
+  public void fetchFirstItemsWithTopItemToRecover() {
     when( sessionStorage.readTop() ).thenReturn( SECOND_ITEM );
     when( itemProvider.fetchItems( SECOND_ITEM, 0 ) ).thenReturn( emptyList() );
     timeline.setFetchCount( 1 );

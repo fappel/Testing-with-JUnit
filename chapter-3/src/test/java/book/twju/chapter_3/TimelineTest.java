@@ -18,6 +18,9 @@ public class TimelineTest {
   private static final FakeItem FIRST_ITEM = new FakeItem( 10 );
   private static final FakeItem SECOND_ITEM = new FakeItem( 20 );
   private static final FakeItem THIRD_ITEM = new FakeItem( 30 );
+  private static final FakeItem FOURTH_ITEM = new FakeItem( 40 );
+  private static final FakeItem FIFTH_ITEM = new FakeItem( 50 );
+  private static final FakeItem SIXTH_ITEM = new FakeItem( 60 );
   
   private final static int NEW_FETCH_COUNT
     = new Timeline( new ItemProviderDummy(), new SessionStorageFake() ).getFetchCount() + 1;
@@ -35,42 +38,64 @@ public class TimelineTest {
 
   @Test
   public void fetchItems() {
-    itemProvider.addItems( FIRST_ITEM, SECOND_ITEM, THIRD_ITEM );
-    timeline.setFetchCount( 1 );    
+    itemProvider.addItems( FIRST_ITEM, SECOND_ITEM, THIRD_ITEM, FOURTH_ITEM, FIFTH_ITEM, SIXTH_ITEM );
+    timeline.setFetchCount( 2 );    
     timeline.fetchItems();
 
     timeline.fetchItems();
     List<Item> actual = timeline.getItems();
-      
-    assertArrayEquals( new Item[] { THIRD_ITEM, SECOND_ITEM }, 
+
+    assertArrayEquals( new Item[] { SIXTH_ITEM, FIFTH_ITEM, FOURTH_ITEM, THIRD_ITEM }, 
                        actual.toArray( new Item[ 2 ] ) );
   }
   
   @Test
-  public void fetchFirstItemsWithTopItemRecovery() {
-    itemProvider.addItems( FIRST_ITEM, SECOND_ITEM, THIRD_ITEM );
+  public void fetchFirstItemsWithTopItemToRecover() {
+    itemProvider.addItems( FIRST_ITEM, SECOND_ITEM, THIRD_ITEM, FOURTH_ITEM );
     when( sessionStorage.readTop() ).thenReturn( SECOND_ITEM );
-    timeline.setFetchCount( 1 );
+    timeline.setFetchCount( 2 );
       
     timeline.fetchItems();
     List<Item> actual = timeline.getItems();
-      
-    assertEquals( 1, actual.size() );
+
     assertSame( SECOND_ITEM, actual.get( 0 ) );
+    assertArrayEquals( new Item[] { SECOND_ITEM, FIRST_ITEM }, 
+                       actual.toArray( new Item[ 2 ] ) );
     verify( sessionStorage ).storeTop( SECOND_ITEM );
   }
   
   @Test
-  public void fetchFirstItemsWithoutTopItemRecovery() {
-    itemProvider.addItems( FIRST_ITEM, SECOND_ITEM, THIRD_ITEM );
-    timeline.setFetchCount( 1 );
+  public void fetchFirstItemsWithoutTopItemToRecover() {
+    itemProvider.addItems( FIRST_ITEM, SECOND_ITEM, THIRD_ITEM, FOURTH_ITEM );
+    timeline.setFetchCount( 2 );
       
     timeline.fetchItems();
     List<Item> actual = timeline.getItems();
       
-    assertEquals( 1, actual.size() );
-    assertSame( THIRD_ITEM, actual.get( 0 ) );
-    verify( sessionStorage ).storeTop( THIRD_ITEM );
+    assertArrayEquals( new Item[] { FOURTH_ITEM, THIRD_ITEM }, 
+                       actual.toArray( new Item[ 2 ] ) );
+    verify( sessionStorage ).storeTop( FOURTH_ITEM );
+  }
+
+  @Test
+  public void fetchItemsIfNonAvailable() {
+    timeline.fetchItems();
+    List<Item> actual = timeline.getItems();
+
+    assertTrue( actual.isEmpty() );
+    verify( sessionStorage ).storeTop( null );
+  }
+  
+  @Test
+  public void fetchItemsIfFetchCountExceedsAvailableItems() {
+    itemProvider.addItems( FIRST_ITEM, SECOND_ITEM );
+    
+    timeline.fetchItems();
+    List<Item> actual = timeline.getItems();
+    
+    assertArrayEquals( new Item[] { SECOND_ITEM, FIRST_ITEM }, 
+                       actual.toArray( new Item[ 2 ] ) );
+    verify( sessionStorage ).storeTop( SECOND_ITEM );
   }
   
   @Test

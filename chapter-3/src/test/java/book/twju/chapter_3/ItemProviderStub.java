@@ -23,7 +23,7 @@ class ItemProviderStub implements ItemProvider {
   public List<Item> fetchItems( Item ancestor, int itemCount ) {
     return items
       .stream()
-      .sorted( sort() )
+      .sorted( descending() )
       .filter( item -> isApplicable( ancestor, item ) )
       .limit( itemCount )
       .collect( toList() );
@@ -34,7 +34,7 @@ class ItemProviderStub implements ItemProvider {
     items.addAll( asList( itemsToAdd ) );
   }
   
-  private Comparator<? super Item> sort() {
+  private Comparator<? super Item> descending() {
     return ( first, second ) 
       -> compare( second.getTimeStamp(), first.getTimeStamp() );
   }

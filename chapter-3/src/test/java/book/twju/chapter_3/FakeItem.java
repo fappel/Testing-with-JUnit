@@ -12,4 +12,9 @@ public class FakeItem implements Item {
   public long getTimeStamp() {
     return timeStamp;
   }
+
+  @Override
+  public String toString() {
+    return "FakeItem [timeStamp=" + timeStamp + "]";
+  }
 }

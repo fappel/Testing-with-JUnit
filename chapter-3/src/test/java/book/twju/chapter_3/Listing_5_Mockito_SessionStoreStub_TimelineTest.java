@@ -34,7 +34,7 @@ public class Listing_5_Mockito_SessionStoreStub_TimelineTest {
   }
   
   @Test
-  public void fetchFirstItemsWithTopItemRecovery() {
+  public void fetchFirstItemsWithTopItemToRecover() {
     itemProvider.addItems( FIRST_ITEM, SECOND_ITEM, THIRD_ITEM );
     when( sessionStorage.readTop() ).thenReturn( SECOND_ITEM );
     timeline.setFetchCount( 1 );
@@ -48,7 +48,7 @@ public class Listing_5_Mockito_SessionStoreStub_TimelineTest {
   }
   
   @Test
-  public void fetchFirstItemsWithoutTopItemRecovery() {
+  public void fetchFirstItemsWithoutTopItemToRecover() {
     itemProvider.addItems( FIRST_ITEM, SECOND_ITEM, THIRD_ITEM );
     timeline.setFetchCount( 1 );
       

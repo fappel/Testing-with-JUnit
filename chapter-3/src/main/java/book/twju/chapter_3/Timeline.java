@@ -45,8 +45,9 @@ public class Timeline {
   }
 
   public void fetchItems() {
-    items.addAll( itemProvider.fetchItems( getOldest(), getFetchCount() + restoreIfNeeded() ) );
-    sessionStorage.storeTop( getOldest() );
+    int restoreOffset = restoreIfNeeded();
+    items.addAll( itemProvider.fetchItems( getOldest(), getFetchCount() + restoreOffset ) );
+    sessionStorage.storeTop( getTopItem() );
   }
 
   private int restoreIfNeeded() {
@@ -66,5 +67,12 @@ public class Timeline {
       return null;
     }
     return items.get( items.size() - 1 );
+  }
+  
+  private Item getTopItem() {
+    if( items.isEmpty() ) {
+      return null;
+    }
+    return items.get( 0 );
   }
 }
