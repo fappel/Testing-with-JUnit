@@ -36,6 +36,7 @@ public class TimelineTest {
   private SessionStorage sessionStorage;
   private ItemProviderStub itemProvider;
   private Timeline timeline;
+  
 
   @Before
   public void setUp() {
