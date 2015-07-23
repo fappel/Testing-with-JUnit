@@ -44,6 +44,7 @@ public class TimelineTest {
     sessionStorage = mock( SessionStorage.class );
     timeline = new Timeline( itemProvider, sessionStorage );
   }
+  
   @Test
   public void setFetchCountExceedsUpperBound() {
     int tooLarge = FETCH_COUNT_UPPER_BOUND + 1;
