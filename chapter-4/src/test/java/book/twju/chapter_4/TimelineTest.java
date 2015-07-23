@@ -37,7 +37,6 @@ public class TimelineTest {
   private ItemProviderStub itemProvider;
   private Timeline timeline;
   
-
   @Before
   public void setUp() {
     itemProvider = new ItemProviderStub();
