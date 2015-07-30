@@ -10,4 +10,4 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 after_success:
-  - mvn -f sample.application/build/pom.xml clean test jacoco:report coveralls:report
+  - mvn -f sample.application/build/pom.xml test jacoco:report coveralls:report
