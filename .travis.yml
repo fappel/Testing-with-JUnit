@@ -4,10 +4,10 @@ jdk:
 branches:
   only:
     - master
-script: mvn -f sample.application/build/pom.xml clean verify
+script: mvn -f chapter-8/build/pom.xml verify
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 after_success:
-  - mvn -f sample.application/build/pom.xml test jacoco:report coveralls:report
+  - mvn -f chapter-8/build/pom.xml test jacoco:report coveralls:report
