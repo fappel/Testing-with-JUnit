@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+org.moreunit.test.test_methodDefaultContent=
+org.moreunit.testClassNameTemplate=${srcFile}(Test|ITest)
+org.moreunit.test_methodType=testMethodTypeNoPrefix
+org.moreunit.unitsourcefolder=timeline.swt.application\:src/main/java\:timeline.swt.application\:src/test/java
+org.moreunit.useprojectsettings=true
