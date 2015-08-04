@@ -79,7 +79,7 @@ public class FileStorageStructureITest {
   
   @Test
   public void constructWithInvalidFileName() throws IOException {
-    Throwable actual = thrownBy( () -> new FileStorageStructure( new File( "?<>%*:|" ) ) );
+    Throwable actual = thrownBy( () -> new FileStorageStructure( new File( "?<>% *:|" ) ) );
     
     assertThat( actual )
       .isInstanceOf( IllegalArgumentException.class )
