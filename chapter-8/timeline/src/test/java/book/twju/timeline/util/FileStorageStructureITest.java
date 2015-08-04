@@ -13,10 +13,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import book.twju.timeline.test.util.ConditionalIgnoreRule;
+import book.twju.timeline.test.util.ConditionalIgnoreRule.ConditionalIgnore;
+import book.twju.timeline.test.util.NotRunningOnWindows;
+
 public class FileStorageStructureITest {
   
-  @Rule
-  public final TemporaryFolder temporaryFolder = new TemporaryFolder();
+  @Rule public final ConditionalIgnoreRule  conditionalIgnoreRule = new ConditionalIgnoreRule();
+  @Rule public final TemporaryFolder temporaryFolder = new TemporaryFolder();
   
   private FileStorageStructure storageStructure;
   private File timelineDirectory;
@@ -78,6 +82,7 @@ public class FileStorageStructureITest {
   }
   
   @Test
+  @ConditionalIgnore( condition = NotRunningOnWindows.class )
   public void constructWithInvalidFileName() throws IOException {
     Throwable actual = thrownBy( () -> new FileStorageStructure( new File( "?<>% *:|" ) ) );
     
