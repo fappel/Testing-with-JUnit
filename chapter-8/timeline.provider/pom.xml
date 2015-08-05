@@ -2,6 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>timeline.provider</artifactId>
+  <version>${revision}</version>
   
   <parent>
     <groupId>book.twju</groupId>
@@ -11,21 +12,24 @@
   </parent>
   
   <dependencies>
-    <dependency>
-      <groupId>book.twju</groupId>
-      <artifactId>timeline</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>book.twju</groupId>
-      <artifactId>timeline.test.util</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>test</scope>
-    </dependency>
+    <!-- Runtime -->
     <dependency>
 	    <groupId>org.eclipse.jgit</groupId>
 	    <artifactId>org.eclipse.jgit</artifactId>
 	    <version>3.7.1.201504261725-r</version>
+    </dependency>
+    <dependency>
+      <groupId>book.twju</groupId>
+      <artifactId>timeline</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    
+    <!-- Test -->
+    <dependency>
+      <groupId>book.twju</groupId>
+      <artifactId>timeline.test.util</artifactId>
+      <version>${revision}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

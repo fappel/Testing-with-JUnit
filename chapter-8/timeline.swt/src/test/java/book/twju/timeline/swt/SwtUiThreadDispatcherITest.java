@@ -48,6 +48,15 @@ public class SwtUiThreadDispatcherITest {
   }
   
   @Test
+  public void dispatchIfDisplayIsDisposed() {
+    displayHelper.getDisplay().dispose();
+    
+    Throwable actual = thrownBy( () -> dispatcher.dispatch( () -> { throw new RuntimeException(); } ) );
+    
+    assertThat( actual ).isNull();
+  }
+  
+  @Test
   public void dispatchWithNullAsRunnable() {
     Throwable actual = thrownBy( () -> dispatcher.dispatch( null ) );
     

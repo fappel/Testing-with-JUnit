@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.rap.ui.internal.launch.rwt.RWTLaunchConfigType">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/timeline.tabris"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="timeline.tabris"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value=""/>
+<stringAttribute key="org.eclipse.rap.launch.rwt.browserMode" value="EXTERNAL"/>
+<stringAttribute key="org.eclipse.rap.launch.rwt.contextpath" value="/"/>
+<booleanAttribute key="org.eclipse.rap.launch.rwt.developmentMode" value="true"/>
+<stringAttribute key="org.eclipse.rap.launch.rwt.entryPoint" value="book.juian.timeline.tabris.TimelineEntryPoint"/>
+<stringAttribute key="org.eclipse.rap.launch.rwt.launchMode" value="WEB_XML"/>
+<booleanAttribute key="org.eclipse.rap.launch.rwt.openBrowser" value="false"/>
+<intAttribute key="org.eclipse.rap.launch.rwt.port" value="10080"/>
+<stringAttribute key="org.eclipse.rap.launch.rwt.servletPath" value="/timeline"/>
+<intAttribute key="org.eclipse.rap.launch.rwt.sessionTimeout" value="0"/>
+<booleanAttribute key="org.eclipse.rap.launch.rwt.useManualContextPath" value="false"/>
+<booleanAttribute key="org.eclipse.rap.launch.rwt.useManualPort" value="true"/>
+<booleanAttribute key="org.eclipse.rap.launch.rwt.useSessionTimeout" value="false"/>
+<stringAttribute key="org.eclipse.rap.launch.rwt.webAppLocation" value=""/>
+<stringAttribute key="org.eclipse.rap.launch.rwt.webXmlLocation" value="/timeline.tabris/WEB-INF/web.xml"/>
+</launchConfiguration>

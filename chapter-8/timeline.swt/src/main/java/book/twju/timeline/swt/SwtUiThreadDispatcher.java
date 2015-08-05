@@ -28,6 +28,8 @@ public class SwtUiThreadDispatcher implements UiThreadDispatcher {
   public void dispatch( Runnable runnable ) {
     checkArgument( runnable != null, RUNNABLE_MUST_NOT_BE_NULL );
     
-    display.asyncExec( runnable );
+    if( !display.isDisposed() ) {
+      display.asyncExec( runnable );
+    }
   }
 }

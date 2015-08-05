@@ -32,5 +32,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/timeline.swt.application"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/timeline.swt.test.util"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/timeline.util.test.util"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/timeline.tabris"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

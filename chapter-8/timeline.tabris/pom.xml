@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>timeline.tabris</artifactId>
+  <version>${revision}</version>
+  
+  <parent>
+    <groupId>book.twju</groupId>
+    <artifactId>build</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../build/pom.xml</relativePath>
+  </parent>
+  
+  <dependencies>
+    <!-- Runtime -->
+    <dependency>
+      <groupId>org.eclipse.rap</groupId>
+      <artifactId>org.eclipse.rap.rwt</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.eclipsesource.tabris</groupId>
+      <artifactId>tabris</artifactId>
+      <version>1.4.4</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>book.twju</groupId>
+      <artifactId>timeline</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>book.twju</groupId>
+      <artifactId>timeline.provider</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>book.twju</groupId>
+      <artifactId>timeline.swt</artifactId>
+      <version>${revision}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.eclipse.swt</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>book.twju</groupId>
+      <artifactId>timeline.swt.application</artifactId>
+      <version>${revision}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.eclipse.swt</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    
+    <!-- Test -->
+        <dependency>
+      <groupId>book.twju</groupId>
+      <artifactId>timeline.test.util</artifactId>
+      <version>${revision}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

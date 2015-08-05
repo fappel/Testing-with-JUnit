@@ -2,6 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>timeline.util.test.util</artifactId>
+  <version>${revision}</version>
   
   <parent>
     <groupId>book.twju</groupId>
@@ -11,15 +12,16 @@
   </parent>
   
   <dependencies>
-    <dependency>
-      <groupId>book.twju</groupId>
-      <artifactId>timeline.util</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
+    <!-- Runtime -->
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
-      <version>1.10.19</version>
+      <version>${mockito-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>book.twju</groupId>
+      <artifactId>timeline.util</artifactId>
+      <version>${revision}</version>
     </dependency>
   </dependencies>
 </project>
