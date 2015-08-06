@@ -51,6 +51,9 @@
     <profile>
       <id>mac</id>
       <activation><os><family>mac</family></os></activation>
+      <properties>
+        <ui.test.vmargs>-XstartOnFirstThread</ui.test.vmargs>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.eclipse.swt</groupId>
