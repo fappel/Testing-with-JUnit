@@ -82,11 +82,15 @@ class SwtItemUiList<T extends Item> extends ItemUiList<T, Composite> {
   private void layoutContent() {
     GridLayout gridLayout = new GridLayout();
     content.setLayout( gridLayout );
-    Point size = content.computeSize( uiRoot.getClientArea().width, SWT.DEFAULT, true );
-    int itemControlWidth = size.x - gridLayout.verticalSpacing * 2;
+    content.setSize( computePreferredContentSize() );
+    int itemControlWidth = computePreferredContentSize().x - gridLayout.verticalSpacing * 2;
     asList( content.getChildren() ).forEach( itemControl -> setLayoutData( itemControl, itemControlWidth ) );
-    content.setSize( content.computeSize( uiRoot.getClientArea().width, SWT.DEFAULT, true ) );
+    content.setSize( computePreferredContentSize() );
     content.layout();
+  }
+
+  private Point computePreferredContentSize() {
+    return content.computeSize( uiRoot.getClientArea().width, SWT.DEFAULT, true );
   }
 
   private void setLayoutData( Control itemControl , int width  ) {
