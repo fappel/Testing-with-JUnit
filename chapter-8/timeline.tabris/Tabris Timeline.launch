@@ -25,5 +25,5 @@
 <booleanAttribute key="org.eclipse.rap.launch.rwt.useManualPort" value="true"/>
 <booleanAttribute key="org.eclipse.rap.launch.rwt.useSessionTimeout" value="false"/>
 <stringAttribute key="org.eclipse.rap.launch.rwt.webAppLocation" value=""/>
-<stringAttribute key="org.eclipse.rap.launch.rwt.webXmlLocation" value="/timeline.tabris/WEB-INF/web.xml"/>
+<stringAttribute key="org.eclipse.rap.launch.rwt.webXmlLocation" value="/timeline.tabris/src/main/webapp/WEB-INF/web.xml"/>
 </launchConfiguration>

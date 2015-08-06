@@ -3,6 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>timeline.tabris</artifactId>
   <version>${revision}</version>
+  <packaging>war</packaging>
   
   <parent>
     <groupId>book.twju</groupId>
@@ -67,4 +68,21 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <packagingExcludes>
+            WEB-INF/lib/javax.servlet-api*.jar,
+            WEB-INF/lib/org.eclipse.swt*.jar
+          </packagingExcludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
 </project>
