@@ -23,6 +23,7 @@ public class Application {
     Display display = Display.getDefault();
     Shell shell = createShell( display );
     SwtTimeline<?> timeline = createTimelineFactory().create( shell, URI, REPOSITORY_NAME );
+    timeline.setTitle( "JUnit" );
     timeline.startAutoRefresh();
     spinUiLoop( display, shell );
   }

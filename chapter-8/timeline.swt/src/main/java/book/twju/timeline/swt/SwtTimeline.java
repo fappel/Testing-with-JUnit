@@ -45,6 +45,10 @@ public class SwtTimeline<T extends Item> {
   public void stopAutoRefresh() {
     autoUpdate.stop();
   }
+  
+  public void setTitle( String title ) {
+    header.setTitle( title );
+  }
 
   private Composite initialize( Composite parent ) {
     Composite result = new Composite( parent, SWT.NONE );

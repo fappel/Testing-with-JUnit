@@ -32,6 +32,7 @@ public class TimelineEntryPoint implements EntryPoint {
     shell.setMaximized( true );
     shell.setLayout( new FillLayout() );
     SwtTimeline<?> timeline = createTimelineFactory().create( shell, URI, REPOSITORY_NAME );
+    timeline.setTitle( "JUnit" );
     timeline.startAutoRefresh();
     RWT.getUISession().addUISessionListener( evt -> timeline.stopAutoRefresh() );
     shell.open();

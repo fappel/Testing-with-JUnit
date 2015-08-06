@@ -80,4 +80,13 @@ public class SwtTimelineITest {
     
     verify( autoUpdate ).stop();
   }
+  
+  @Test
+  public void setTitle() {
+    String expected = "title";
+    
+    timeline.setTitle( expected );
+    
+    verify( header ).setTitle( expected );
+  }
 }

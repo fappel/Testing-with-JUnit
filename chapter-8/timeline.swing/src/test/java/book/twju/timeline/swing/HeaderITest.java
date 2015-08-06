@@ -1,5 +1,7 @@
 package book.twju.timeline.swing;
 
+import static book.twju.timeline.swing.Header.TITLE_MUST_NOT_BE_NULL;
+import static book.twju.timeline.test.util.ThrowableCaptor.thrownBy;
 import static book.twju.timeline.util.test.util.BackgroundThreadHelper.directBackgroundProcessor;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentCaptor.forClass;
@@ -78,6 +80,32 @@ public class HeaderITest {
     
     verify( listener ).actionPerformed( captor.capture() );
     assertThat( captor.getValue().getSource() ).isSameAs( header.getComponent() );
+  }
+  
+  @Test
+  public void getTitle() {
+    String actual = header.getTitle();
+    
+    assertThat( actual ).isEqualTo( Header.TITLE );
+  }
+  
+  @Test
+  public void setTitle() {
+    String expected = "title ";
+    
+    header.setTitle( expected );
+    String actual = header.getTitle();
+    
+    assertThat( actual ).isEqualTo( expected );
+  }
+  
+  @Test
+  public void setTitleWithNullAsArgument() {
+    Throwable actual = thrownBy( () -> header.setTitle( null ) );
+    
+    assertThat( actual )
+      .hasMessage( TITLE_MUST_NOT_BE_NULL )
+      .isInstanceOf( IllegalArgumentException.class );
   }
 
   private Header<Item> createHeader( Timeline<Item> timeline, BackgroundProcessor backgroundProcessor ) {

@@ -2,6 +2,7 @@ package book.twju.timeline.swing;
 
 import static book.twju.timeline.swing.Resources.changeFontSize;
 import static book.twju.timeline.swing.SwingTimelineCompound.createBackgroundProcessor;
+import static book.twju.timeline.util.Assertion.checkArgument;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -18,7 +19,8 @@ import book.twju.timeline.util.BackgroundProcessor;
 
 class Header<T extends Item> {
   
-  private static final String TITLE = "Timeline";
+  static final String TITLE = "Timeline";
+  static final String TITLE_MUST_NOT_BE_NULL = "Argument 'title' must not be null.";
 
   private final BackgroundProcessor backgroundProcessor;
   private final Timeline<T> timeline;
@@ -56,6 +58,16 @@ class Header<T extends Item> {
   
   void onFetchNew( ActionListener listener ) {
     fetchNew.addActionListener( evt -> notifyAboutFetchRequest( listener, evt ) );
+  }
+
+  void setTitle( String title ) {
+    checkArgument( title != null, TITLE_MUST_NOT_BE_NULL );
+    
+    this.title.setText( title );
+  }
+  
+  String getTitle() {
+    return title.getText();
   }
   
   private void update( int count ) {

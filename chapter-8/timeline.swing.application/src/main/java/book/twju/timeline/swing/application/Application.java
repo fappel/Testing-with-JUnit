@@ -27,6 +27,7 @@ public class Application {
   private static void createAndShowUi() {
     JFrame frame = createFrame();
     SwingTimeline<?> timeline = createTimelineFactory().create( URI, REPOSITORY_NAME );
+    timeline.setTitle( "JUnit" );
     layout( frame, timeline.getComponent() );
     timeline.startAutoRefresh();
   }

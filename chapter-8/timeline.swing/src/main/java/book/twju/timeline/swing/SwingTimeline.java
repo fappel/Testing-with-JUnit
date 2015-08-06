@@ -44,6 +44,10 @@ public class SwingTimeline<T extends Item> {
   public void stopAutoRefresh() {
     autoUpdate.stop();
   }
+  
+  public void setTitle( String title ) {
+    header.setTitle( title );
+  }
 
   private JPanel initialize() {
     header.createUi();
