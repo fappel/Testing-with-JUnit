@@ -30,6 +30,6 @@ and run the given examples easily. An exception from the rule is chapter eight, 
 </td>
 <td>
 <p>Chapter eight contains the complete sample application and can be launched on various platforms and widget toolkits. Look out for the 'Application' classes in the 'timeline.swing.application' or 'timeline.swt.application' projects, or use the <a href="http://www.eclipse.org/rap/" target="_blank">RAP</a> 'Configuration' in the 'timeline.tabris' project, if you want to run the web or mobile modules. In case you are using <a href="http://www.eclipse.org/downloads/packages/eclipse-rcp-and-rap-developers/marsr" target="_blank">Eclipse</a> the projects contain predefined lauch configurations.</p>
-<p>Note that the sample is not meant to be production ready, using splash screens or the like on startup, for example. In fact, the first launch will take some time as it clones the <a href="https://github.com/junit-team/junit" target="_blank">JUnit Git Repository</a> using the commits as timeline content.</p>
+<p>Note that the sample is not meant to be production ready, using splash screens or the like on startup, for example. In fact, the first launch will take some time as it clones the <a href="https://github.com/junit-team/junit" target="_blank">JUnit Git Repository</a> using its commits as timeline content.</p>
 </td></tr>
 <table>
