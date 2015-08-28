@@ -3,7 +3,7 @@ Source code repository of the book [Testing with JUnit](http://www.codeaffine.co
 
 [![Build Status](https://travis-ci.org/fappel/Testing-with-JUnit.png)](https://travis-ci.org/fappel/Testing-with-JUnit)
 [![Coverage Status](https://coveralls.io/repos/fappel/Testing-with-JUnit/badge.svg)](https://coveralls.io/r/fappel/Testing-with-JUnit)
-[![Book](https://img.shields.io/badge/Testing%20with-JUnit-green.svg)](http://www.codeaffine.com/testing-with-junit/)
+[![Book Details](https://img.shields.io/badge/Testing%20with-JUnit-green.svg)](http://www.codeaffine.com/testing-with-junit/)
 
 
 <table width="100%">
