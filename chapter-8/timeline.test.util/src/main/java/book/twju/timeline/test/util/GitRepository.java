@@ -2,9 +2,11 @@ package book.twju.timeline.test.util;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.write;
+import static org.assertj.core.util.Files.delete;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Function;
 
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.CommitCommand;
@@ -15,28 +17,20 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 public class GitRepository {
 
-  private File location;
-  private Git git;
+  private final File location;
 
-  GitRepository( Git git, File location ) {
+  GitRepository( File location ) {
     this.location = location;
-    this.git = git;
   }
   
-  void close() {
-    git.close();
+  void dispose() {
+    delete( location );
   }
   
   public RevCommit commitFile( String fileName, String content, String message ) throws IOException {
     createFile( fileName, content );
     addFiles();
     return commit( message );
-  }
-
-  public RevCommit commit( String message ) {
-    CommitCommand commitCommand = git.commit();
-    commitCommand.setMessage( message );
-    return callCommand( commitCommand );
   }
   
   public File createFile( String name, String content ) throws IOException {
@@ -45,12 +39,41 @@ public class GitRepository {
     return result;
   }
 
+  public RevCommit commit( String message ) {
+    return apply( git -> doCommit( message, git ) );
+  }
+  
+  private RevCommit doCommit( String message, Git git ) {
+    CommitCommand commitCommand = git.commit();
+    commitCommand.setMessage( message );
+    return callCommand( commitCommand );
+  }
+  
   private void addFiles() {
+    apply( git -> doAddFiles( ".", git ) );
+  }
+  
+  private Object doAddFiles( String pattern, Git git ) {
     AddCommand addCommand = git.add();
-    addCommand.addFilepattern( "." );
+    addCommand.addFilepattern( pattern );
     callCommand( addCommand );
+    return null;
   }
 
+  private <T> T apply( Function<Git, T> function ) {
+    Git git = null;
+    try {
+      git = Git.open( location );
+      return function.apply( git );
+    } catch( IOException ioe ) {
+      throw new GitOperationException( ioe );
+    } finally {
+      if( git != null ) {
+        git.close();
+      }
+    }
+  }
+  
   private static <T> T callCommand( GitCommand<T> command ) {
     try {
       return command.call();

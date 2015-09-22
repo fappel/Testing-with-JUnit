@@ -52,8 +52,8 @@ public class GitItemProvider implements ItemProvider<GitItem> {
   @Override
   public List<GitItem> fetchItems( GitItem oldestItem, int fetchCount ) {
     checkArgument( fetchCount >= 0, FETCH_COUNT_MUST_NOT_BE_NEGATIVE );
-    
-    return asList( readCommits( oldestItem, fetchCount ) )
+
+    return readCommits( oldestItem, fetchCount )
       .stream()
       .filter( commit -> oldestItem == null || !commit.getId().equals( getId( oldestItem ) ) )
       .map( commit -> ofCommit( commit ) )
@@ -70,19 +70,19 @@ public class GitItemProvider implements ItemProvider<GitItem> {
     checkArgument( latestItem != null, LATEST_ITEM_MUST_NOT_BE_NULL );
     
     operator.execute( git -> git.pull().call() );
-    List<RevCommit> commits = asList( operator.execute( git -> git.log().setMaxCount( 100 ).call() ) );
+    List<RevCommit> commits = operator.execute( git -> asList( git.log().setMaxCount( 100 ).call() ) );
     return commits
       .subList( 0, computeNewCount( latestItem, commits ) )
       .stream()
       .map( commit -> ofCommit( commit ) )
       .collect( toList() );
   }
-
+  
   private File cloneIfNeeded( String uri, File destination, String name ) {
     File result = new File( destination, name );
     if( !result.exists() )  {
       result.mkdirs();
-      guarded( () -> cloneRemote( uri, result ) );
+      guarded( () -> cloneRemote( uri, result ) ).close();
     }
     return result;
   }
@@ -95,16 +95,16 @@ public class GitItemProvider implements ItemProvider<GitItem> {
     }
   }
 
-  private Iterable<RevCommit> readCommits( GitItem oldestItem, int fetchCount ) {
+  private List<RevCommit> readCommits( GitItem oldestItem, int fetchCount ) {
     if( oldestItem != null ) {
       return operator.execute( git -> fetchPredecessors( git, oldestItem, fetchCount ) );
     }
-    return operator.execute( git -> git.log().setMaxCount( fetchCount ).call() );
+    return operator.execute( git -> asList( git.log().setMaxCount( fetchCount ).call() ) );
   }
 
-  private Iterable<RevCommit> fetchPredecessors( Git git , GitItem oldestItem, int fetchCount ) throws Exception {
+  private List<RevCommit> fetchPredecessors( Git git , GitItem oldestItem, int fetchCount ) throws Exception {
     try {
-      return git.log().add( getId( oldestItem ) ).setMaxCount( fetchCount + 1 ).call();
+      return asList( git.log().add( getId( oldestItem ) ).setMaxCount( fetchCount + 1 ).call() );
     } catch( MissingObjectException moe ) {
       File directory = git.getRepository().getDirectory();
       throw new IllegalArgumentException( format( UNKNOWN_GIT_ITEM, oldestItem, directory ), moe );

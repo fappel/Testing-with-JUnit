@@ -1,10 +1,8 @@
 package book.twju.timeline.test.util;
 
-import static book.twju.timeline.test.util.FileHelper.delete;
-
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.InitCommand;
@@ -13,31 +11,34 @@ import org.junit.rules.ExternalResource;
 
 public class GitRule extends ExternalResource {
 
-  private final Map<File, GitRepository> repositories;
+  private final Set<GitRepository> repositories;
 
   public GitRule() {
-    repositories = new HashMap<>();
+    repositories = new HashSet<>();
   }
   
   @Override
   protected void after() {
-    repositories.values().forEach( repository -> repository.close() );
-    repositories.keySet().forEach( file -> delete( file ) );
+    repositories.forEach( repository -> repository.dispose() );
   }
   
   public GitRepository create( File location ) {
-    InitCommand init = Git.init();
-    init.setDirectory( location );
-    init.setBare( false );
-    Git git = callInit( init );
-    GitRepository result = new GitRepository( git, location );
-    repositories.put( location, result );
+    createRepositoryOnDisk( location );
+    GitRepository result = new GitRepository( location );
+    repositories.add( result );
     return result;
   }
 
-  private static Git callInit( InitCommand init ) {
+  private void createRepositoryOnDisk( File location ) {
+    InitCommand init = Git.init();
+    init.setDirectory( location );
+    init.setBare( false );
+    callInit( init );
+  }
+
+  private static void callInit( InitCommand init ) {
     try {
-      return init.call();
+      init.call().close();
     } catch( GitAPIException exception ) {
       throw new GitOperationException( exception );
     }

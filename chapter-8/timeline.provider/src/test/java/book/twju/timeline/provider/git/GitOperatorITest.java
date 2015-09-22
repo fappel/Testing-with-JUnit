@@ -81,7 +81,7 @@ public class GitOperatorITest {
       .hasCause( cause )
       .isInstanceOf( IllegalStateException.class );
   }
-  
+
   private File createRepository() throws IOException {
     File result = temporaryFolder.newFolder();
     GitRepository repository = gitRule.create( result );

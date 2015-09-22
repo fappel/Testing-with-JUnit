@@ -24,7 +24,7 @@ class GitOperator {
 
   GitOperator( File repositoryLocation ) {
     this.repositoryLocation = repositoryLocation;
-    openRepository();
+    openRepository().close();
   }
   
   <T> T execute( GitOperation<T> gitOperation ) {

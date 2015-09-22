@@ -4,6 +4,7 @@ import static book.twju.timeline.provider.git.GitItemProvider.DESTINATION_MUST_N
 import static book.twju.timeline.provider.git.GitItemProvider.LATEST_ITEM_MUST_NOT_BE_NULL;
 import static book.twju.timeline.provider.git.GitItemProvider.NAME_MUST_NOT_BE_NULL;
 import static book.twju.timeline.provider.git.GitItemProvider.URI_MUST_NOT_BE_NULL;
+import static book.twju.timeline.test.util.FileHelper.delete;
 import static book.twju.timeline.test.util.ThrowableCaptor.thrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -245,6 +246,17 @@ public class GitItemProviderITest {
     GitItemProvider actual = new GitItemProvider( remoteLocation.toURI().toString(), destination, CLONE_NAME );
     
     assertThat( actual.fetchItems( null, 1 ) ).isNotNull();
+  }
+  
+  @Test
+  public void deleteRepositoryLocationAfterGitOperations() throws IOException {
+    List<GitItem> latestItems = provider.fetchItems( null, 1 );
+    createCommits( repository, 2, "n" );
+    provider.fetchNew( latestItems.get( 0 ) );
+
+    delete( destination );
+    
+    assertThat( destination ).doesNotExist();
   }
   
   private List<GitItem> subListOf( int logSize, int fromIndex, int toIndex  ) {
