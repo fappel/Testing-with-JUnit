@@ -1,8 +1,8 @@
 package book.twju.timeline.test.util;
 
+import static book.twju.timeline.test.util.FileHelper.delete;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.write;
-import static org.assertj.core.util.Files.delete;
 
 import java.io.File;
 import java.io.IOException;
