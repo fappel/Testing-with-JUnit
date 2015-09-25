@@ -51,7 +51,7 @@ public class GitItemProviderITest {
     List<GitItem> actual = provider.fetchItems( null, fetchCount );
     
     assertThat( actual )
-      .isEqualTo( subListOf( INITIAL_COMMIT_COUNT, 0, fetchCount ) )
+      .isEqualTo( subListOf( 0, fetchCount ) )
       .hasSize( fetchCount );
   }
   
@@ -73,7 +73,7 @@ public class GitItemProviderITest {
     
     assertThat( second )
       .isNotEqualTo( first )
-      .isEqualTo( subListOf( INITIAL_COMMIT_COUNT, fetchCount, fetchCount * 2 ) )
+      .isEqualTo( subListOf( fetchCount, fetchCount * 2 ) )
       .hasSize( fetchCount );
   }
 
@@ -108,8 +108,8 @@ public class GitItemProviderITest {
     List<GitItem> actual = provider.fetchNew( latestItems.get( 0 ) );
 
     assertThat( actual )
-      .doesNotContainAnyElementsOf( subListOf( all, newCount, all ) )
-      .isEqualTo( subListOf( all, 0, newCount ) )
+      .doesNotContainAnyElementsOf( subListOf( newCount, all ) )
+      .isEqualTo( subListOf( 0, newCount ) )
       .hasSize( newCount );
   }
   
@@ -138,7 +138,7 @@ public class GitItemProviderITest {
     List<GitItem> actual = provider.fetchNew( unrelated );
     
     assertThat( actual )
-      .isEqualTo( subListOf( INITIAL_COMMIT_COUNT, 0, INITIAL_COMMIT_COUNT ) )
+      .isEqualTo( subListOf( 0, INITIAL_COMMIT_COUNT ) )
       .hasSize( INITIAL_COMMIT_COUNT );
   }
 
@@ -261,7 +261,7 @@ public class GitItemProviderITest {
     assertThat( destination ).doesNotExist();
   }
   
-  private List<GitItem> subListOf( int logSize, int fromIndex, int toIndex  ) {
+  private List<GitItem> subListOf( int fromIndex , int toIndex  ) {
     return repository
       .logAll()
       .stream()
