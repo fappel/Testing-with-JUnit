@@ -1,6 +1,5 @@
 package book.twju.timeline.test.util;
 
-import static book.twju.timeline.test.util.FileHelper.delete;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.write;
 
@@ -21,10 +20,6 @@ public class GitRepository {
 
   GitRepository( File location ) {
     this.location = location;
-  }
-  
-  void dispose() {
-    delete( location );
   }
   
   public RevCommit commitFile( String fileName, String content, String message ) throws IOException {

@@ -1,5 +1,7 @@
 package book.twju.timeline.test.util;
 
+import static book.twju.timeline.test.util.FileHelper.delete;
+
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +13,7 @@ import org.junit.rules.ExternalResource;
 
 public class GitRule extends ExternalResource {
 
-  private final Set<GitRepository> repositories;
+  private final Set<File> repositories;
 
   public GitRule() {
     repositories = new HashSet<>();
@@ -19,13 +21,13 @@ public class GitRule extends ExternalResource {
   
   @Override
   protected void after() {
-    repositories.forEach( repository -> repository.dispose() );
+    repositories.forEach( repository -> delete( repository ) );
   }
   
   public GitRepository create( File location ) {
     createRepositoryOnDisk( location );
     GitRepository result = new GitRepository( location );
-    repositories.add( result );
+    repositories.add( location );
     return result;
   }
 
