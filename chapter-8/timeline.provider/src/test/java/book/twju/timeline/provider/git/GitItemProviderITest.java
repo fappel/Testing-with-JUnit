@@ -1,11 +1,13 @@
 package book.twju.timeline.provider.git;
 
+import static book.twju.timeline.provider.git.GitItem.ofCommit;
 import static book.twju.timeline.provider.git.GitItemProvider.DESTINATION_MUST_NOT_BE_NULL;
 import static book.twju.timeline.provider.git.GitItemProvider.LATEST_ITEM_MUST_NOT_BE_NULL;
 import static book.twju.timeline.provider.git.GitItemProvider.NAME_MUST_NOT_BE_NULL;
 import static book.twju.timeline.provider.git.GitItemProvider.URI_MUST_NOT_BE_NULL;
 import static book.twju.timeline.test.util.FileHelper.delete;
 import static book.twju.timeline.test.util.ThrowableCaptor.thrownBy;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
@@ -260,7 +262,12 @@ public class GitItemProviderITest {
   }
   
   private List<GitItem> subListOf( int logSize, int fromIndex, int toIndex  ) {
-    return provider.fetchItems( null, logSize ).subList( fromIndex, toIndex );
+    return repository
+      .logAll()
+      .stream()
+      .map( commit -> ofCommit( commit ) )
+      .collect( toList() )
+      .subList( fromIndex, toIndex );
   }
 
   private GitRepository createRepository( File remoteLocation ) throws IOException {

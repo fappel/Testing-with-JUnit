@@ -5,6 +5,8 @@ import static java.nio.file.Files.write;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 import org.eclipse.jgit.api.AddCommand;
@@ -37,11 +39,21 @@ public class GitRepository {
   public RevCommit commit( String message ) {
     return apply( git -> doCommit( message, git ) );
   }
+
+  public List<RevCommit> logAll() {
+    return apply( git -> doLogAll( git ) );
+  }
   
   private RevCommit doCommit( String message, Git git ) {
     CommitCommand commitCommand = git.commit();
     commitCommand.setMessage( message );
     return callCommand( commitCommand );
+  }
+  
+  private List<RevCommit> doLogAll( Git git ) {
+    List<RevCommit> result = new ArrayList<>();
+    callCommand( git.log() ).forEach( commit -> result.add( commit ) );
+    return result;
   }
   
   private void addFiles() {
