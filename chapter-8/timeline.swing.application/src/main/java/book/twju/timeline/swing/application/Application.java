@@ -16,8 +16,8 @@ import book.twju.timeline.util.FileStorageStructure;
 public class Application {
 
   private static final File BASE_DIRECTORY = new File( System.getProperty( "user.home" ) );
-  private static final String URI = "git@github.com:junit-team/junit.git";
-  private static final String REPOSITORY_NAME = "junit";
+  private static final String URI = "https://github.com/junit-team/junit4.git";
+  private static final String REPOSITORY_NAME = "junit4";
   
   public static void main( String[] args ) {
     Locale.setDefault( Locale.ENGLISH );
